@@ -1,9 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
-import authRouter from "./routes/authRouter.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+
+// IMPORT ROUTER
+import authRouter from "./routes/authRouter.js";
+import productRouter from "./routes/productRouter.js";
 
 dotenv.config();
 
@@ -16,6 +19,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/product", productRouter);
 
 app.use(notFound);
 app.use(errorHandler);
