@@ -1,7 +1,13 @@
 import asyncHandler from "../middleware/asyncHandler.js";
+import Product from "../models/productModel.js";
 
 export const createProduct = asyncHandler(async (req, res) => {
-  res.send("Create Product");
+  const newProduct = await Product.create(req.body);
+
+  return res.status(201).json({
+    message: "Data Produk Berhasil Ditambahkan",
+    data: newProduct,
+  });
 });
 
 export const allProduct = asyncHandler(async (req, res) => {
