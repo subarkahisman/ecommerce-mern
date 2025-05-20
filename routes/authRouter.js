@@ -1,34 +1,28 @@
 import express from "express";
-import User from "../models/userModel.js";
+import {
+  registerUser,
+  loginUser,
+  getCurrentUser,
+  logoutUser,
+} from "../controllers/authController.js";
+import { protectedMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // Endpoint
 // POST /api/v1/auth/register
-router.post("/register", async (req, res) => {
-  try {
-    await User.create({ name: req.body.name });
-  } catch (error) {
-    res.json({ error });
-  }
-});
+router.post("/register", registerUser);
 
 // Endpoint
 // POST /api/v1/auth/login
-router.post("/login", (req, res) => {
-  res.send("Login ");
-});
+router.post("/login", loginUser);
 
 // Endpoint
 // GET /api/v1/auth/logout
-router.get("/logout", (req, res) => {
-  res.send("Logout ");
-});
+router.get("/logout", protectedMiddleware, logoutUser);
 
 // Endpoint
 // GET /api/v1/auth/getuser
-router.get("/getuser", (req, res) => {
-  res.send("Get Current User ");
-});
+router.get("/getuser", protectedMiddleware, getCurrentUser);
 
 export default router;

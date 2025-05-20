@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import authRouter from "./routes/authRouter.js";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const port = 3000;
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/auth", authRouter);
