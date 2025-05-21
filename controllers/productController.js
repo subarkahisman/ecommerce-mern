@@ -25,7 +25,7 @@ export const detailProduct = asyncHandler(async (req, res) => {
   if (!productData) {
     res.status(404);
     throw new Error(
-      `Detail Data Product dengan Id : ${req.params.id} tidak ditemukan`
+      `Detail Data Product dengan Id : ${req.params.id} Tidak Ditemukan !`
     );
   }
   return res.status(200).json({
@@ -35,11 +35,23 @@ export const detailProduct = asyncHandler(async (req, res) => {
 });
 
 export const updateProduct = asyncHandler(async (req, res) => {
-  res.send("Update Product");
+  const paramId = req.params.id;
+  const updateProduct = await Product.findByIdAndUpdate(paramId, req.body, {
+    runValidators: false,
+    new: true,
+  });
+
+  return res.status(201).json({
+    message: "Data Produk Berhasil Diperbarui",
+    data: updateProduct,
+  });
 });
 
 export const deleteProduct = asyncHandler(async (req, res) => {
-  res.send("Delete Product");
+  await Product.findByIdAndDelete(req.params.id);
+  return res.status(200).json({
+    message: "Data Produk Berhasil Dihapus",
+  });
 });
 
 export const fileUpload = asyncHandler(async (req, res) => {
