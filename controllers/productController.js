@@ -55,5 +55,17 @@ export const deleteProduct = asyncHandler(async (req, res) => {
 });
 
 export const fileUpload = asyncHandler(async (req, res) => {
-  res.send("File Upload Image Product");
+  const file = req.file;
+  if (!file) {
+    res.status(400);
+    throw new Error("Tidak Ada File Gambar yang Diinput");
+  }
+
+  const imageFIleName = file.filename;
+  const pathImageFIle = `/uploads/${imageFIleName}`;
+
+  res.status(200).json({
+    message: "File Gambr Berhasil Di-upload",
+    image: pathImageFIle,
+  });
 });

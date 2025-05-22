@@ -12,6 +12,8 @@ import {
   adminMiddleware,
 } from "../middleware/authMiddleware.js";
 
+import { upload } from "../utils/uploadFileHandler.js";
+
 const router = express.Router();
 
 router.post("/", protectedMiddleware, adminMiddleware, createProduct);
@@ -24,6 +26,6 @@ router.put("/:id", protectedMiddleware, adminMiddleware, updateProduct);
 
 router.delete("/:id", protectedMiddleware, adminMiddleware, deleteProduct);
 
-router.post("/file-upload", fileUpload);
+router.post("/file-upload", protectedMiddleware, adminMiddleware, fileUpload);
 
 export default router;
