@@ -26,6 +26,12 @@ router.put("/:id", protectedMiddleware, adminMiddleware, updateProduct);
 
 router.delete("/:id", protectedMiddleware, adminMiddleware, deleteProduct);
 
-router.post("/file-upload", protectedMiddleware, adminMiddleware, fileUpload);
+router.post(
+  "/file-upload",
+  protectedMiddleware,
+  adminMiddleware,
+  upload.single("image"),
+  fileUpload
+);
 
 export default router;

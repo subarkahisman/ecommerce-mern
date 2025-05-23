@@ -21,6 +21,9 @@ const productSchema = new Schema({
     required: [true, "Kategori Produk harus diisi"],
     enum: ["sepatu", "kemeja", "celana", "baju"],
   },
+  image: {
+    type: String,
+  },
   stock: {
     type: Number,
     default: 0,
