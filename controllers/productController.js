@@ -18,6 +18,20 @@ export const allProduct = asyncHandler(async (req, res) => {
 
   let query = Product.find(queryObj);
 
+  const page = req.query.page * 1 || 1;
+  const limitData = req.query.limit * 1 || 30;
+  const skipData = (page - 1) * limitData;
+
+  query = query.skip(skipData).limit(limitData);
+
+  if (req.query.page) {
+    const numProduct = await Product.countDocuments();
+    if (skipData >= numProduct) {
+      res.status(404);
+      throw new Error("Halaman ini tidak ada !.");
+    }
+  }
+
   const data = await query;
 
   return res.status(200).json({
