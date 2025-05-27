@@ -11,7 +11,14 @@ export const createProduct = asyncHandler(async (req, res) => {
 });
 
 export const allProduct = asyncHandler(async (req, res) => {
-  const data = await Product.find();
+  const queryObj = { ...req.query };
+
+  const excludeField = ["page", "limit"];
+  excludeField.forEach((element) => delete queryObj[element]);
+
+  let query = Product.find(queryObj);
+
+  const data = await query;
 
   return res.status(200).json({
     message: "Semua Produk Berhasil Ditampilkan",
