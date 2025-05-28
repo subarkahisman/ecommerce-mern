@@ -20,7 +20,7 @@ export const allProduct = asyncHandler(async (req, res) => {
 
   if (req.query.name) {
     query = Product.find({
-      name: { $regex: req.query.name, $option: "i" },
+      name: { $regex: req.query.name, $options: "i" },
     });
   } else {
     query = Product.find(queryObj);
@@ -32,9 +32,9 @@ export const allProduct = asyncHandler(async (req, res) => {
 
   query = query.skip(skipData).limit(limitData);
 
+  let countProduct = await Product.countDocuments();
   if (req.query.page) {
-    const numProduct = await Product.countDocuments();
-    if (skipData >= numProduct) {
+    if (skipData >= countProduct) {
       res.status(404);
       throw new Error("Halaman ini tidak ada !.");
     }
@@ -44,6 +44,7 @@ export const allProduct = asyncHandler(async (req, res) => {
 
   return res.status(200).json({
     message: "Semua Produk Berhasil Ditampilkan",
+    count: countProduct,
     data,
   });
 });
