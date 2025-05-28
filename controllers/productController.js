@@ -13,10 +13,18 @@ export const createProduct = asyncHandler(async (req, res) => {
 export const allProduct = asyncHandler(async (req, res) => {
   const queryObj = { ...req.query };
 
-  const excludeField = ["page", "limit"];
+  const excludeField = ["page", "limit", "name"];
   excludeField.forEach((element) => delete queryObj[element]);
 
-  let query = Product.find(queryObj);
+  let query;
+
+  if (req.query.name) {
+    query = Product.find({
+      name: { $regex: req.query.name, $option: "i" },
+    });
+  } else {
+    query = Product.find(queryObj);
+  }
 
   const page = req.query.page * 1 || 1;
   const limitData = req.query.limit * 1 || 30;
