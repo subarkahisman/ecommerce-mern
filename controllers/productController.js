@@ -43,7 +43,7 @@ export const allProduct = asyncHandler(async (req, res) => {
   const data = await query;
 
   return res.status(200).json({
-    message: "Semua Produk Berhasil Ditampilkan",
+    message: "Semua Data Produk Berhasil Ditampilkan",
     count: countProduct,
     data,
   });

@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 // IMPORT ROUTER
 import authRouter from "./routes/authRouter.js";
 import productRouter from "./routes/productRouter.js";
+import orderRouter from "./routes/orderRouter.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(express.static("./public"));
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/product", productRouter);
+app.use("/api/v1/order", orderRouter);
 
 app.use(notFound);
 app.use(errorHandler);
